@@ -1,0 +1,1295 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cute Pet World</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f6, #eee7ff);
+            color: #62536d;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 20px auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d66b9c;
+            margin: 0;
+        }
+
+        .guide-link {
+            display: inline-block;
+            text-decoration: none;
+            background: #e9d8ff;
+            color: #755a96;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .guide-link {
+            display: inline-block;
+            text-decoration: none;
+            background: #e9d8ff;
+            color: #755a96;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px #c9a9d522;
+            font-weight: bold;
+        }
+
+        .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 22px;
+            box-shadow: 0 5px 18px #b99ac522;
+            margin-bottom: 20px;
+        }
+
+        h2, h3 {
+            color: #b96d9d;
+        }
+
+        .animal-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .animal-btn {
+            padding: 12px 18px;
+            border-radius: 15px;
+            background: #fce4ef;
+            color: #875b79;
+            border: 2px solid transparent;
+        }
+
+        .animal-btn.selected {
+            background: #f8c6dc;
+            border-color: #db83ac;
+        }
+
+        .pet-area {
+            text-align: center;
+            padding: 20px 10px;
+            background: linear-gradient(135deg, #fff0f7, #f2edff);
+            border-radius: 20px;
+        }
+
+        .pet {
+            font-size: 110px;
+            margin: 10px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pet-name {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ca6c9c;
+        }
+
+        .name-form {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        input {
+            border: 1px solid #e6c6d9;
+            border-radius: 10px;
+            padding: 11px;
+            max-width: 190px;
+            outline: none;
+        }
+
+        .small-btn {
+            background: #e9d8ff;
+            color: #755a96;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: #fff8fc;
+            padding: 14px;
+            border-radius: 15px;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        .bar {
+            height: 13px;
+            background: #eee5ef;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            width: 50%;
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+
+        .hunger-fill { 
+            background: #f2a65a; 
+        }
+
+        .happy-fill { 
+            background: #ed85b1; 
+        }
+
+        .clean-fill { 
+            background: #83cbb7; 
+        }
+
+        .energy-fill { 
+            background: #9c91df; 
+        }
+
+        .xp-fill { 
+            background: #e9bb62; 
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 16px 8px;
+            border-radius: 15px;
+            background: #fce4ef;
+            color: #875b79;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .action-btn span {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .food-list, .shop-list, .food-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+            gap: 12px;
+        }
+
+        .food-btn, .shop-item {
+            background: #fff2f8;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            color: #775b70;
+        }
+
+        .food-btn .emoji, .shop-item .emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .food-btn small, .shop-item small {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .food-selection {
+            background: #fff5fa;
+            padding: 18px;
+            border-radius: 18px;
+            margin-top: 18px;
+        }
+
+        .food-selection h3 { margin: 0 0 8px; }
+
+        .food-help {
+            color: #987e9b;
+            font-size: 13px;
+            margin: 0 0 14px;
+        }
+
+        .food-choice {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 14px;
+            text-align: center;
+            color: #775b70;
+        }
+
+        .food-choice.selected {
+            border-color: #b47ac1;
+            background: #f4e4f7;
+        }
+
+        .food-choice .emoji {
+            display: block;
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .food-choice small {
+            display: block;
+            margin-top: 5px;
+            color: #987e9b;
+        }
+
+        .buy-btn {
+            background: #dcbcf5;
+            color: #634d80;
+            padding: 9px 14px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .message {
+            min-height: 28px;
+            text-align: center;
+            font-weight: bold;
+            color: #c56898;
+            margin: 15px 0 0;
+        }
+
+        .level-area {
+            margin-top: 18px;
+        }
+
+        .level-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: #f5d9df;
+            color: #9d566c;
+            padding: 12px 18px;
+            border-radius: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #987e9b;
+            font-size: 13px;
+            margin: 20px;
+        }
+
+        .food-selection {
+            background: #fff5fa;
+            padding: 18px;
+            border-radius: 18px;
+            margin-top: 15px;
+        }
+
+        .food-selection h3 {
+            color: #a66bb5;
+            margin-bottom: 15px;
+        }
+
+        .food-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .food-btn {
+            background: white;
+            border: 2px solid #f0d8ee;
+            border-radius: 14px;
+            padding: 12px;
+            cursor: pointer;
+            color: #805b91;
+            font-family: inherit;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .food-btn:hover {
+            background: #f8e9f7;
+            transform: translateY(-3px);
+        }
+
+        .food-btn.selected {
+            border-color: #b47ac1;
+            background: #f4e4f7;
+        }
+
+        .food-count {
+            display: block;
+            font-size: 11px;
+            color: #a18aa6;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🌸 My Cute Pet World</h1>
+               
+            <div class="header-stats">
+            <div class="pill">🪙 <span id="coins">50</span></div>
+            <div class="pill">⭐ Level <span id="level">1</span></div>
+        </div>
+    </header>
+
+    <!-- ANIMAL SELECTION -->
+    <section class="panel">
+        <h2>🐾 Choose Your Pet</h2>
+
+        <div class="animal-list" id="animalList">
+            <button class="animal-btn selected" onclick="choosePet('dog', this)">🐶 Dog</button>
+            <button class="animal-btn" onclick="choosePet('cat', this)">🐱 Cat</button>
+            <button class="animal-btn" onclick="choosePet('rabbit', this)">🐰 Rabbit</button>
+            <button class="animal-btn" onclick="choosePet('panda', this)">🐼 Panda</button>
+            <button class="animal-btn" onclick="choosePet('bear', this)">🐻 Bear</button>
+        </div>
+    </section>
+
+    <!-- PET DISPLAY -->
+    <section class="panel">
+
+        <div class="pet-area">
+
+            <div class="pet" id="petEmoji">🐶</div>
+
+            <div class="pet-name" id="petName">Buddy</div>
+
+            <div id="petMood">I'm happy to see you! ❤️</div>
+
+            <div class="name-form">
+                <input type="text" id="nameInput"
+                       placeholder="Enter pet name" maxlength="16">
+                <button class="small-btn" onclick="changeName()">Save Name</button>
+            </div>
+        </div>
+
+        <!-- PET STATS -->
+        <div class="stats-grid">
+
+            <div class="stat">
+                <div class="stat-top">
+                    <span>🍖 Hunger</span>
+                    <span id="hungerValue">35%</span>
+                </div>
+                <div class="bar">
+                    <div class="fill hunger-fill" id="hungerBar"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <span>💖 Happiness</span>
+                    <span id="happyValue">70%</span>
+                </div>
+                <div class="bar">
+                    <div class="fill happy-fill" id="happyBar"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <span>🛁 Cleanliness</span>
+                    <span id="cleanValue">70%</span>
+                </div>
+                <div class="bar">
+                    <div class="fill clean-fill" id="cleanBar"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-top">
+                    <span>😴 Energy</span>
+                    <span id="energyValue">70%</span>
+                </div>
+                <div class="bar">
+                    <div class="fill energy-fill" id="energyBar"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LEVEL -->
+        <div class="level-area">
+            <div class="level-text">
+                <span>⭐ Experience</span>
+                <span id="xpText">0 / 50 XP</span>
+            </div>
+
+            <div class="bar">
+                <div class="fill xp-fill" id="xpBar"></div>
+            </div>
+        </div>
+
+        <p class="message" id="message">Take good care of your pet! 💕</p>
+
+    </section>
+
+    <!-- PET ACTIONS -->
+    <section class="panel">
+        <h2>💕 Take Care of Your Pet</h2>
+
+        <div class="actions">
+            <button class="action-btn" onclick="feedPet()"><span>🍽️</span>Feed</button>
+            <button class="action-btn" onclick="playWithPet()"><span>🎾</span>Play</button>
+            <button class="action-btn" onclick="giveBath()"><span>🛁</span>Bath</button>
+            <button class="action-btn" onclick="sleepPet()"><span>💤</span>Sleep</button>
+        </div>
+
+        <div class="food-selection">
+            <h3>🍽️ Choose Food for Your <span id="foodPetName">Dog</span></h3>
+            <p class="food-help">Select one food, then press the Feed button above.</p>
+            <div id="foodOptions" class="food-options"></div>
+        </div>
+    </section>
+
+    <!-- FOOD INVENTORY -->
+    <section class="panel">
+
+        <h2>🍓 Food Inventory – <span id="inventoryPetName">Dog</span></h2>
+
+        <div class="food-list" id="foodInventory"></div>
+
+        <p style="font-size:13px;color:#987e9b;">
+            Feed your pet its favourite food to increase its happiness.
+        </p>
+
+    </section>
+
+    <!-- PET SHOP -->
+    <section class="panel">
+
+        <h2>🛍️ Pet Shop</h2>      
+        <p>Food purchases are added to the currently selected pet’s inventory.</p>
+
+        <p>Buy food and care items using your coins.</p>
+
+        <div class="shop-list" id="shopItems"></div>
+
+    </section>
+
+    <section class="panel" style="text-align:center;">
+        <h3>💾 Game Progress</h3>
+        <p>Your game progress is automatically saved in this browser.</p>
+        <button class="reset-btn" onclick="resetGame()">Reset All Progress</button>
+    </section>
+
+</div>
+
+<script>
+
+    
+    // Animal info
+
+    const animals = {
+
+        dog: {
+            name: "Dog",
+            emoji: "🐶",
+            favouriteFood: "meat"
+        },
+
+        cat: {
+            name: "Cat",
+            emoji: "🐱",
+            favouriteFood: "fish"
+        },
+
+        rabbit: {
+            name: "Rabbit",
+            emoji: "🐰",
+            favouriteFood: "carrot"
+        },
+
+        panda: {
+            name: "Panda",
+            emoji: "🐼",
+            favouriteFood: "bamboo"
+        },
+
+        bear: {
+            name: "Bear",
+            emoji: "🐻",
+            favouriteFood: "berries"
+        }
+
+    };
+
+    // Food info
+
+    const foods = {
+        meat: { name: "Meat", emoji: "🍖", price: 10 },
+        dogFood: { name: "Dog Food", emoji: "🥣", price: 10 },
+        fish: { name: "Fish", emoji: "🐟", price: 10 },
+        catFood: { name: "Cat Food", emoji: "🥣", price: 10 },
+        carrot: { name: "Carrot", emoji: "🥕", price: 10 },
+        greens: { name: "Leafy Greens", emoji: "🥬", price: 10 },
+        bamboo: { name: "Bamboo", emoji: "🎋", price: 10 },
+        berries: { name: "Berries", emoji: "🫐", price: 10 },
+        honey: { name: "Honey", emoji: "🍯", price: 10 }
+    };
+
+    const animalFoods = {
+        dog: [
+            { name: "Meat", emoji: "🍖", id: "meat" },
+            { name: "Dog Food", emoji: "🥣", id: "dogFood" }
+        ],
+        cat: [
+            { name: "Fish", emoji: "🐟", id: "fish" },
+            { name: "Cat Food", emoji: "🥣", id: "catFood" }
+        ],
+        rabbit: [
+            { name: "Carrot", emoji: "🥕", id: "carrot" },
+            { name: "Leafy Greens", emoji: "🥬", id: "greens" }
+        ],
+        panda: [
+            { name: "Bamboo", emoji: "🎋", id: "bamboo" },
+            { name: "Honey", emoji: "🍯", id: "honey" }
+        ],
+        bear: [
+            { name: "Berries", emoji: "🫐", id: "berries" },
+            { name: "Fish", emoji: "🐟", id: "fish" },
+            { name: "Honey", emoji: "🍯", id: "honey" }
+        ]
+    };
+
+    // Game
+
+    function createDefaultPet(animal) {
+        const foodInventory = {};
+        (animalFoods[animal] || []).forEach(function(food) {
+            foodInventory[food.id] = 3;
+        });
+
+        return {
+            petName: "",
+            hunger: 35,
+            happiness: 70,
+            cleanliness: 70,
+            energy: 70,
+            foodInventory: foodInventory
+        };
+    }
+
+    function createDefaultGame() {
+        const petStates = {};
+
+        Object.keys(animals).forEach(function(animal) {
+            petStates[animal] = createDefaultPet(animal);
+        });
+
+        return {
+            selectedPet: "dog",
+            coins: 50,
+            xp: 0,
+            inventory: {
+                soap: 1,
+                toy: 1
+            },
+            pets: petStates
+        };
+    }
+
+
+    // Load saved game
+
+    function loadGame() {
+        try {
+            const saved = localStorage.getItem("cutePetGame");
+            if (!saved) return createDefaultGame();
+
+            const loaded = JSON.parse(saved);
+            const fresh = createDefaultGame();
+
+            if (!loaded || typeof loaded !== "object") return fresh;
+
+            fresh.selectedPet = animals[loaded.selectedPet] ? loaded.selectedPet : "dog";
+            fresh.coins = Number.isFinite(loaded.coins) ? Math.max(0, loaded.coins) : 50;
+            fresh.xp = Number.isFinite(loaded.xp) ? Math.max(0, loaded.xp) : 0;
+
+            // Restore shared care items from both old and new save formats.
+            if (loaded.inventory && typeof loaded.inventory === "object") {
+                ["soap", "toy"].forEach(function(item) {
+                    const amount = Number(loaded.inventory[item]);
+                    if (Number.isFinite(amount)) fresh.inventory[item] = Math.max(0, amount);
+                });
+            }
+
+            Object.keys(animals).forEach(function(animal) {
+                const oldPet = loaded.pets && loaded.pets[animal];
+                if (!oldPet) return;
+
+                ["hunger", "happiness", "cleanliness", "energy"].forEach(function(stat) {
+                    const value = Number(oldPet[stat]);
+                    if (Number.isFinite(value)) {
+                        fresh.pets[animal][stat] = Math.max(0, Math.min(100, value));
+                    }
+                });
+
+                if (typeof oldPet.petName === "string") {
+                    fresh.pets[animal].petName = oldPet.petName.slice(0, 16);
+                }
+
+                // New saves store food separately for every pet.
+                if (oldPet.foodInventory && typeof oldPet.foodInventory === "object") {
+                    (animalFoods[animal] || []).forEach(function(food) {
+                        const amount = Number(oldPet.foodInventory[food.id]);
+                        if (Number.isFinite(amount)) {
+                            fresh.pets[animal].foodInventory[food.id] = Math.max(0, amount);
+                        }
+                    });
+                } else {
+                    // Migrate food stock from the previous shared-inventory version.
+                    const oldInventory = loaded.inventory || {};
+                    const legacyFood = {
+                        dog: "meat",
+                        cat: "fish",
+                        rabbit: "carrot",
+                        panda: "bamboo",
+                        bear: "berries"
+                    };
+                    const oldFoodId = legacyFood[animal];
+                    if (oldFoodId && Number.isFinite(Number(oldInventory[oldFoodId]))) {
+                        fresh.pets[animal].foodInventory[oldFoodId] =
+                            Math.max(0, Number(oldInventory[oldFoodId]));
+                    }
+                }
+            });
+
+            return fresh;
+        } catch (error) {
+            console.log("Could not load saved game.", error);
+            return createDefaultGame();
+        }
+    }
+
+
+    let game = loadGame();
+
+    let messageTimeout;
+
+
+    // Save
+
+    function saveGame() {
+
+        try {
+
+            localStorage.setItem(
+                "cutePetGame",
+                JSON.stringify(game)
+            );
+
+        } catch (error) {
+
+            showMessage("Unable to save game in this browser.");
+
+        }
+
+    }
+
+
+    // Helper
+
+    function currentPet() {
+        return game.pets[game.selectedPet];
+    }
+
+    function clamp(value) {
+        return Math.max(0, Math.min(100, value));
+    }
+
+    function addXP(amount) {
+
+        game.xp += amount;
+
+    }
+
+    function getLevel() {
+
+        return Math.floor(game.xp / 50) + 1;
+
+    }
+
+    function showMessage(text) {
+
+        const message = document.getElementById("message");
+
+        message.textContent = text;
+
+        clearTimeout(messageTimeout);
+
+        messageTimeout = setTimeout(function() {
+            message.textContent = "Take good care of your pet! 💕";
+        }, 3500);
+
+    }
+
+
+    // Update
+
+    function updateGame() {
+
+        const pet = currentPet();
+        const animal = animals[game.selectedPet];
+
+        const level = getLevel();
+        const xpInLevel = game.xp % 50;
+
+        document.getElementById("coins").textContent = game.coins;
+
+        document.getElementById("level").textContent = level;
+
+        document.getElementById("petEmoji").textContent =
+            animal.emoji;
+
+        document.getElementById("petName").textContent =
+            pet.petName || animal.name;
+
+        document.getElementById("hungerValue").textContent =
+            pet.hunger + "%";
+
+        document.getElementById("happyValue").textContent =
+            pet.happiness + "%";
+
+        document.getElementById("cleanValue").textContent =
+            pet.cleanliness + "%";
+
+        document.getElementById("energyValue").textContent =
+            pet.energy + "%";
+
+        document.getElementById("hungerBar").style.width =
+            pet.hunger + "%";
+
+        document.getElementById("happyBar").style.width =
+            pet.happiness + "%";
+
+        document.getElementById("cleanBar").style.width =
+            pet.cleanliness + "%";
+
+        document.getElementById("energyBar").style.width =
+            pet.energy + "%";
+
+        document.getElementById("xpText").textContent =
+            xpInLevel + " / 50 XP";
+
+        document.getElementById("xpBar").style.width =
+            (xpInLevel / 50 * 100) + "%";
+
+
+        // Pet mood
+
+        if (pet.hunger >= 80) {
+
+            document.getElementById("petMood").textContent =
+                "I'm very hungry! Please feed me! 🥺";
+
+        } else if (pet.happiness < 30) {
+
+            document.getElementById("petMood").textContent =
+                "I feel lonely. Let's play! 💗";
+
+        } else if (pet.cleanliness < 25) {
+
+            document.getElementById("petMood").textContent =
+                "I need a bath! 🛁";
+
+        } else if (pet.energy < 25) {
+
+            document.getElementById("petMood").textContent =
+                "I'm sleepy! 😴";
+
+        } else {
+
+            document.getElementById("petMood").textContent =
+                "I'm happy to see you! ❤️";
+
+        }
+
+
+        // Selected animal button
+
+        document.querySelectorAll(".animal-btn").forEach(function(button) {
+
+            button.classList.remove("selected");
+
+            if (
+                button.textContent.includes(animal.name)
+            ) {
+                button.classList.add("selected");
+            }
+
+        });
+
+
+        document.getElementById("foodPetName").textContent = animal.name;
+        document.getElementById("inventoryPetName").textContent = animal.name;
+
+        updateFoodOptions();
+        updateInventory();
+        updateShop();
+
+        saveGame();
+
+    }
+
+
+    // Select animal
+
+    function choosePet(animal, button) {
+
+        if (!animals[animal]) return;
+
+        game.selectedPet = animal;
+        selectedFood = null;
+
+        updateGame();
+
+        showMessage(
+            "You are now taking care of your " +
+            animals[animal].name + "! 💕"
+        );
+
+    }
+
+
+    // Pet name
+
+    function changeName() {
+
+        const input = document.getElementById("nameInput");
+
+        const name = input.value.trim();
+
+        if (name === "") {
+
+            showMessage("Please enter a pet name!");
+
+            return;
+
+        }
+
+        currentPet().petName = name.slice(0, 16);
+
+        input.value = "";
+
+        updateGame();
+
+        showMessage("Your pet has a new name! 💗");
+
+    }
+
+
+    // Food choices and feeding for the currently selected animal
+
+    let selectedFood = null;
+
+    function updateFoodOptions() {
+        const pet = currentPet();
+        const foodContainer = document.getElementById("foodOptions");
+        const availableFoods = animalFoods[game.selectedPet] || [];
+        foodContainer.innerHTML = "";
+
+        availableFoods.forEach(function(food) {
+            const count = pet.foodInventory[food.id] || 0;
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "food-choice";
+            button.disabled = count <= 0;
+            button.innerHTML = `
+                <span class="emoji">${food.emoji}</span>
+                <strong>${food.name}</strong>
+                <small>${count} available</small>
+            `;
+
+            if (selectedFood === food.id) button.classList.add("selected");
+
+            button.onclick = function() {
+                selectedFood = food.id;
+                updateFoodOptions();
+                showMessage(food.name + " selected! Press Feed when ready. 🍽️");
+            };
+
+            foodContainer.appendChild(button);
+        });
+    }
+
+    function feedPet() {
+        const pet = currentPet();
+
+        if (!selectedFood) {
+            showMessage("Please select a food first! 🍽️");
+            return;
+        }
+
+        if (!pet.foodInventory[selectedFood] || pet.foodInventory[selectedFood] <= 0) {
+            showMessage("You don't have this food! Visit the Pet Shop. 🥺");
+            selectedFood = null;
+            updateFoodOptions();
+            return;
+        }
+
+        if (pet.hunger <= 0) {
+            showMessage("Your pet is not hungry right now! 😊");
+            return;
+        }
+
+        pet.foodInventory[selectedFood]--;
+        pet.hunger = clamp(pet.hunger - 30);
+        pet.happiness = clamp(pet.happiness + 8);
+        game.coins += 2;
+        addXP(10);
+
+        const eatenFood = foods[selectedFood].name;
+        selectedFood = null;
+
+        updateGame();
+        showMessage("Yummy! Your pet enjoyed the " + eatenFood + "! +2 coins and +10 XP 💗");
+    }
+
+    // Play pet
+
+    function playWithPet() {
+
+        const pet = currentPet();
+
+        if (game.inventory.toy <= 0) {
+
+            showMessage("You need a toy! Visit the Pet Shop. 🧸");
+
+            return;
+
+        }
+
+        if (pet.energy < 15) {
+
+            showMessage("Your pet is too tired. Let it sleep first! 😴");
+
+            return;
+
+        }
+
+        if (pet.happiness >= 100) {
+
+            showMessage("Your pet is already very happy! 💖");
+
+            return;
+
+        }
+
+        pet.happiness = clamp(pet.happiness + 20);
+
+        pet.energy = clamp(pet.energy - 15);
+
+        pet.hunger = clamp(pet.hunger + 8);
+
+        addXP(10);
+
+        game.coins += 3;
+
+        updateGame();
+
+        showMessage("Your pet had fun playing! 🎾 +10 XP and 3 coins.");
+
+    }
+
+
+    // Give bath
+
+    function giveBath() {
+
+        const pet = currentPet();
+
+        if (game.inventory.soap <= 0) {
+
+            showMessage("You need soap! Buy it from the Pet Shop. 🧼");
+
+            return;
+
+        }
+
+        if (pet.cleanliness >= 100) {
+
+            showMessage("Your pet is already clean! ✨");
+
+            return;
+
+        }
+
+        game.inventory.soap--;
+
+        pet.cleanliness = clamp(pet.cleanliness + 40);
+
+        pet.happiness = clamp(pet.happiness + 5);
+
+        addXP(10);
+
+        game.coins += 2;
+
+        updateGame();
+
+        showMessage("Bath time! Your pet is clean now! 🛁 +10 XP.");
+
+    }
+
+
+    // Sleep
+
+    function sleepPet() {
+
+        const pet = currentPet();
+
+        if (pet.energy >= 100) {
+
+            showMessage("Your pet is not sleepy! 😊");
+
+            return;
+
+        }
+
+        pet.energy = clamp(pet.energy + 40);
+
+        pet.happiness = clamp(pet.happiness + 5);
+
+        pet.hunger = clamp(pet.hunger + 5);
+
+        addXP(5);
+
+        updateGame();
+
+        showMessage("Sweet dreams! Your pet feels refreshed! 💤");
+
+    }
+
+
+    // Show the selected pet's own food stock and shared care items
+
+    function updateInventory() {
+        const inventory = document.getElementById("foodInventory");
+        const pet = currentPet();
+        inventory.innerHTML = "";
+
+        (animalFoods[game.selectedPet] || []).forEach(function(food) {
+            const item = document.createElement("div");
+            item.className = "food-btn";
+            item.innerHTML = `
+                <span class="emoji">${food.emoji}</span>
+                <strong>${food.name}</strong>
+                <small>Available: ${pet.foodInventory[food.id] || 0}</small>
+            `;
+            inventory.appendChild(item);
+        });
+
+        const soap = document.createElement("div");
+        soap.className = "food-btn";
+        soap.innerHTML = `<span class="emoji">🧼</span><strong>Soap</strong><small>Available: ${game.inventory.soap}</small>`;
+        inventory.appendChild(soap);
+
+        const toys = document.createElement("div");
+        toys.className = "food-btn";
+        toys.innerHTML = `<span class="emoji">🧸</span><strong>Toy</strong><small>Available: ${game.inventory.toy}</small>`;
+        inventory.appendChild(toys);
+    }
+
+    // Pet shop products.
+    const shopProducts = [
+        { id: "meat", name: "Meat", emoji: "🍖", description: "For Dogs", price: 10, quantity: 3, type: "food" },
+        { id: "dogFood", name: "Dog Food", emoji: "🥣", description: "For Dogs", price: 10, quantity: 3, type: "food" },
+        { id: "fish", name: "Fish", emoji: "🐟", description: "For Cats and Bears", price: 10, quantity: 3, type: "food" },
+        { id: "catFood", name: "Cat Food", emoji: "🥣", description: "For Cats", price: 10, quantity: 3, type: "food" },
+        { id: "carrot", name: "Carrot", emoji: "🥕", description: "For Rabbits", price: 10, quantity: 3, type: "food" },
+        { id: "greens", name: "Leafy Greens", emoji: "🥬", description: "For Rabbits", price: 10, quantity: 3, type: "food" },
+        { id: "bamboo", name: "Bamboo", emoji: "🎋", description: "For Pandas", price: 10, quantity: 3, type: "food" },
+        { id: "berries", name: "Berries", emoji: "🫐", description: "For Bears", price: 10, quantity: 3, type: "food" },
+        { id: "soap", name: "Pet Soap", emoji: "🧼", description: "For bath time", price: 15, quantity: 3, type: "care" },
+        { id: "toy", name: "Pet Toy", emoji: "🧸", description: "For playing", price: 20, quantity: 3, type: "care" },
+        {id: "honey", name: "Honey", emoji: "🍯", description: "For Bears", price: 10, quantity: 3, type: "food"}
+    ];
+
+    function updateShop() {
+
+        const shop = document.getElementById("shopItems");
+
+        shop.innerHTML = "";
+
+        shopProducts.forEach(function(product) {
+
+            const item = document.createElement("div");
+
+            item.className = "shop-item";
+
+            item.innerHTML = `
+                <span class="emoji">${product.emoji}</span>
+                <strong>${product.name}</strong>
+                <small>${product.description}</small>
+                <small>🪙 ${product.price} coins</small>
+
+                <button class="buy-btn"
+                    onclick="buyItem('${product.id}')">
+                    Buy
+                </button>
+            `;
+
+            shop.appendChild(item);
+
+        });
+
+    }
+
+    // Buy food for the selected animal, or shared care items.
+    function buyItem(itemId) {
+        const product = shopProducts.find(function(item) {
+            return item.id === itemId;
+        });
+
+        if (!product) return;
+
+        if (game.coins < product.price) {
+            showMessage("Not enough coins! Keep caring for your pet. 🪙");
+            return;
+        }
+
+        if (product.type === "food") {
+            const suitableFood = (animalFoods[game.selectedPet] || [])
+                .some(function(food) { return food.id === itemId; });
+
+            if (!suitableFood) {
+                showMessage(product.name + " is not food for your selected " +
+                    animals[game.selectedPet].name + ". Choose the matching pet first. 🐾");
+                return;
+            }
+        }
+
+        game.coins -= product.price;
+
+        if (product.type === "food") {
+            const pet = currentPet();
+            pet.foodInventory[itemId] = (pet.foodInventory[itemId] || 0) + product.quantity;
+        } else {
+            game.inventory[itemId] += product.quantity;
+        }
+
+        updateGame();
+        showMessage("You bought " + product.name + "! +" +
+            product.quantity + " added to your inventory. 🛍️");
+    }
+
+
+    // reset game
+
+    function resetGame() {
+
+        const confirmed = confirm(
+            "Are you sure? All saved progress will be lost."
+        );
+
+        if (!confirmed) return;
+
+        game = createDefaultGame();
+
+        saveGame();
+
+        document.getElementById("nameInput").value = "";
+
+        updateGame();
+
+        showMessage("A new pet adventure begins! 🌸");
+
+    }
+
+
+
+    updateGame();
+    updateFoodOptions();
+
+</script>
+
+</body>
+</html>

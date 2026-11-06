@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock paper Scissors</title>
+
+        <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1{
+            color: #00ffff;
+        }
+
+        .game{
+            background: #ffffff15;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            margin: auto;
+        }
+
+        button{
+            font-size: 45px;
+            margin: 10px;
+            padding: 0;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: white;
+            transition: 0.2s;
+        }
+
+        button:hover{
+            transform: scale(1.15);
+            background: #00ffff;
+        }
+
+        #result {
+            font-size: 25px;
+            margin: 25px;
+            font-weight: bold;
+        }
+
+        .score{
+            font-size: 20px;
+            color: yellow;
+        }
+
+        #reset{
+            font-size: 16px;
+            background: #ff4757;
+            color: white;
+            padding: 12px 25px;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <h1>✊Rock Paper Scissors✌️</h1>
+
+    <div class="game">
+        <h2>Choose Your Move!</h2>
+
+        <button onclick="play('rock')">✊</button>
+        <button onclick="play('paper')">✋</button>
+        <button onclick="play('scissors')">✌️</button>
+
+        <h3 id="playerChoice">Your Choice..</h3>
+        <h3 id="computerChoice">Computer Choice..</h3>
+
+        <div id="result">Let's Play!</div>
+
+        <div class="score">
+            <p>Play Score: <span id="playerScore">0</span></p>
+            <p>Computer Score: <span id="computerScore">0</span></p>
+        </div>
+
+        <button id="reset" onclick="resetGame()">Reset Game</button>
+
+
+    </div>
+    
+</body>
+
+<script>
+
+    let playerScore =0;
+    let computerScore = 0;
+
+    //create funtion
+    function play(playerChoice) {
+        const choice = ["rock","paper","scissors"];
+
+        const computerChoice = choice[Math.floor(Math.random() * 3)];
+
+        document.getElementById("computerChoice").innerHTML = 
+        "Computer choice:" + computerChoice
+
+        document.getElementById("playerChoice").innerHTML = 
+        "Your choice:" + playerChoice;
+
+        if (playerChoice === computerChoice){
+            document.getElementById("result").innerHTML = 
+        "🤝 It's a draw!";
+    
+    }else if(
+        (playerChoice === "rock" && computerChoice === "scissors") ||
+        (playerChoice === "paper" && computerChoice === "rock") ||
+        (playerChoice === "scissors" && computerChoice === "paper")
+    ) {
+
+        playerScore++;
+
+        document.getElementById("result").innerHTML = 
+        "🎉 You Win!";
+
+    } else{
+
+        computerScore++;
+
+        document.getElementById("result").innerHTML = 
+        "Computer Win!";
+    
+    }
+
+
+    document.getElementById("playerScore").innerHTML = 
+       playerScore;
+    
+    document.getElementById("computerScore").innerHTML = 
+       computerScore;
+
+}
+
+//reset
+
+function resetGame(){
+
+    playerScore = 0;
+    computerScore = 0;
+
+    document.getElementById("playerScore").innerHTML = 0;
+    document.getElementById("computerScore").innerHTML = 0;
+
+    document.getElementById("playerChoice").innerHTML = 
+        "Your choice: - ";
+    
+    document.getElementById("computerChoice").innerHTML = 
+        "computer choice: - ";
+    
+    document.getElementById("result").innerHTML = 
+        "Let's Play!";
+}
+
+
+    
+
+
+
+</script>
+</html>
